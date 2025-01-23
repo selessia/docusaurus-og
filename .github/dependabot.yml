@@ -1,0 +1,27 @@
+version: 2
+updates:
+    - package-ecosystem: "npm"
+      directory: "/"
+      schedule:
+          interval: "weekly"
+          day: "friday"
+          time: "09:00"
+          timezone: "America/Los_Angeles"
+      groups:
+          dev-dependencies-patch:
+              dependency-type: "development"
+              update-types:
+                  - "patch"
+          dev-dependencies-minor:
+              dependency-type: "development"
+              update-types:
+                  - "minor"
+
+          prod-dependencies-patch:
+              dependency-type: "production"
+              update-types:
+                  - "patch"
+          prod-dependencies-minor:
+              dependency-type: "production"
+              update-types:
+                  - "minor"
