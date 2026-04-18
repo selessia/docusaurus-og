@@ -138,8 +138,20 @@ export class BlogPlugin {
     logger.success('Generated og images for blog pages')
   }
 
-  getHtmlPath = (permalink: string, baseUrl?: string) =>
-    path.join(this.stripLangFromPath(this.context.outDir), permalink, 'index.html')
+  getHtmlPath = (permalink: string, baseUrl?: string) => {
+    let cleanPermalink = permalink;
+
+    // Dynamically grab the baseUrl from your Docusaurus config!
+    const siteBaseUrl = this.context.siteConfig?.baseUrl || '/';
+
+    // If you are using a custom baseUrl (like '/info/'), strip it out dynamically
+    if (siteBaseUrl !== '/' && cleanPermalink.startsWith(siteBaseUrl)) {
+      cleanPermalink = cleanPermalink.replace(siteBaseUrl, '/');
+    }
+
+    return path.join(this.stripLangFromPath(this.context.outDir), cleanPermalink, 'index.html');
+  }
+
   stripLangFromPath = (path: string) => {
     const lang = this.context.i18n.locales.find((locale) => path.endsWith(`/${locale}`))
     return lang ? path.slice(0, -lang.length - 1) : path
