@@ -128,18 +128,31 @@ export class BlogPlugin {
 
       const generated = await this.imageGenerator.generate(...image)
 
-      // --- THE META TAG URL FIX ---
+      // --- THE URL PARSER FIX ---
       let metaImageUrl = generated.url;
       const siteBaseUrl = this.context.siteConfig?.baseUrl || '/';
 
-      // If you are using a custom baseUrl (like '/info/'), prepend it to the image URL
-      if (siteBaseUrl !== '/' && !metaImageUrl.startsWith(siteBaseUrl)) {
-        const cleanBase = siteBaseUrl.endsWith('/') ? siteBaseUrl : `${siteBaseUrl}/`;
-        const cleanImg = metaImageUrl.startsWith('/') ? metaImageUrl.substring(1) : metaImageUrl;
-        metaImageUrl = `${cleanBase}${cleanImg}`;
+      if (siteBaseUrl !== '/') {
+        try {
+          // Parse the full URL (e.g., "https://nomp.se/preview-images/123.png")
+          const urlObj = new URL(metaImageUrl);
+
+          // Check if the path is missing our baseUrl
+          if (!urlObj.pathname.startsWith(siteBaseUrl)) {
+            // Strip any leading slashes from the image path
+            const cleanImgPath = urlObj.pathname.replace(/^\/+/, '');
+            // Ensure baseUrl has a trailing slash
+            const cleanBase = siteBaseUrl.endsWith('/') ? siteBaseUrl : `${siteBaseUrl}/`;
+
+            // Stitch them perfectly: "/info/" + "preview-images/123.png"
+            urlObj.pathname = `${cleanBase}${cleanImgPath}`;
+            metaImageUrl = urlObj.toString();
+          }
+        } catch (e) {
+          console.warn('Could not parse image URL:', metaImageUrl);
+        }
       }
 
-      // Pass the fully constructed URL into the HTML meta tags
       await document.setImage(metaImageUrl)
 
       await document.write()
