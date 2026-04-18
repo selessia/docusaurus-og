@@ -44,15 +44,6 @@ export class BlogPlugin {
     const content = plugin.content as BlogContent
     const options = plugin.options as BlogPluginOptions
 
-    content.blogListPaginated.forEach((value) => {
-      this.pages.push({
-        data: value,
-        plugin: options,
-        pageType: 'list',
-        permalink: value.metadata.permalink,
-      })
-    })
-
     content.blogPosts.forEach((post) => {
       this.pages.push({
         data: post,

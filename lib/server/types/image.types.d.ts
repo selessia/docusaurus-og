@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { Props } from '@docusaurus/types';
 import type { SatoriOptions } from 'satori';
 export type ImageGeneratorOptions = SatoriOptions;

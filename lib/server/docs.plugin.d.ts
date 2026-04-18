@@ -1,4 +1,3 @@
-/// <reference types="@docusaurus/plugin-content-docs/src/plugin-content-docs.js" />
 import { PluginOptions as DocsPluginOptions, LoadedVersion } from '@docusaurus/plugin-content-docs';
 import { LoadedPlugin, Props } from '@docusaurus/types';
 import { ImageGenerator } from './imageGenerator';
