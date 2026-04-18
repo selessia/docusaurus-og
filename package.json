@@ -1,11 +1,11 @@
 {
-  "name": "@waveterm/docusaurus-og",
+  "name": "@selessia/docusaurus-og",
   "version": "1.0.0-alpha.132",
   "description": "Docusaurus OpenGraph image plugin",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wavetermdev/docusaurus-og.git"
+    "url": "https://github.com/selessiadev/docusaurus-og.git"
   },
   "license": "MIT",
   "scripts": {
